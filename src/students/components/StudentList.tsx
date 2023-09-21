@@ -38,14 +38,22 @@ export const StudentList: React.FC<StudentListProps> = ({students = [], courses 
                                             .filter(course => course.isFinished)
                                             .map(course => course.name)
                                             .join(', ');
+
+                                        const availableCourses = courses.filter(course => !student.courses.some(studentCourse => studentCourse.isFinished && studentCourse.courseId === course.id));
+
                                         return (
-                                                <tr className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600" key={student.id}>
+                                                <tr className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200" key={student.id}>
                                                     <td className="whitespace-nowrap px-6 py-4 font-medium">{student.id}</td>
                                                     <td className="whitespace-nowrap px-6 py-4">{student.name}</td>
                                                     <td className="whitespace-nowrap px-6 py-4">{student.subName}</td>
                                                     <td className="whitespace-nowrap px-6 py-4">{student.job}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{student.activeCourse ? student.activeCourse.name : <StudentAddCourse student={student} courses={courses} onCourseSelect={handleCourseSelect}/>}</td>
-                                                    <td className="whitespace-nowrap px-6 py-4">{student.activeCourse ? (student.courses.find(course => course.courseId === student.activeCourse.id)?.progress) : '-'}</td>
+                                                    <td className="whitespace-nowrap px-6 py-4">{student.activeCourse ? student.activeCourse.name : <StudentAddCourse student={student} courses={availableCourses} onCourseSelect={handleCourseSelect}/>}</td>
+                                                    <td className="whitespace-nowrap px-6 py-4">
+                                                        {student.activeCourse 
+                                                            ? `${Math.round(student.courses.find(course => student.activeCourse && course.courseId === student.activeCourse.id)?.progress || 0)}%` 
+                                                            : '-'
+                                                        }
+                                                    </td>                                                    
                                                     <td className="whitespace-nowrap px-6 py-4">{finishedCourses || 'Ninguno'}</td>                                                                            
                                                 </tr>
                                             )

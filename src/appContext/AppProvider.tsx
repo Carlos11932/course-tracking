@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
                     blocks: student.activeCourse.blocks.map(block =>
                       checkedNames.includes(block.name)
                         ? { ...block, isFinished: true }
-                        : block
+                        : { ...block, isFinished: false }
                     ),
                   }
                 : undefined,
@@ -45,6 +45,35 @@ export const AppProvider = ({ children }) => {
               ),
             }
           : student
+      )
+    );
+  };
+
+  const finishStudentCourse = (studentId: number) => {
+    setStudents(prevStudents =>
+      prevStudents.map(student =>
+        student.id === studentId && student.activeCourse
+          ? {
+              ...student,
+              activeCourse: undefined,
+              courses: student.courses.map(course =>
+                course.courseId === student.activeCourse?.id
+                  ? { ...course, isFinished: true }
+                  : course
+              ),
+            }
+          : student
+      )
+    );
+  
+    setCourses(prevCourses =>
+      prevCourses.map(course =>
+        students.find(
+          student =>
+            student.id === studentId && student.activeCourse?.id === course.id
+        )
+          ? { ...course, isFinished: [...course.isFinished, studentId] }
+          : course
       )
     );
   };
@@ -84,7 +113,7 @@ export const AppProvider = ({ children }) => {
   }, [students, courses]);
 
   return (
-    <AppContext.Provider value={{ students, setStudents, courses, setCourses, updateStudentCourse, updateStudentBlocks }}>
+    <AppContext.Provider value={{ students, setStudents, courses, setCourses, updateStudentCourse, updateStudentBlocks, finishStudentCourse }}>
       {children}
     </AppContext.Provider>
   );

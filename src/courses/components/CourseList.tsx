@@ -42,7 +42,7 @@ export const CourseList: React.FC<CourseListProps> = ({courses = [], onCourseEdi
                             <tbody>
                                 {
                                     courses.map( (course: Course) => (
-                                        <tr className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600" key={course.id}>
+                                        <tr className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200" key={course.id}>
                                             <td className="whitespace-nowrap px-6 py-4 font-medium">{course.id}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{course.name}</td>
                                             <td className="whitespace-nowrap px-6 py-4">{course.type}</td>

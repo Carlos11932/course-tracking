@@ -8,6 +8,7 @@ type AppContextType = {
   setCourses: React.Dispatch<React.SetStateAction<Course[]>>;
   updateStudentCourse: (studentId: number, courseId: number) => void;
   updateStudentBlocks: (studentId: number, checkedNames: string[]) => void;
+  finishStudentCourse: (studentId: number) => void; 
 };
 
 export const AppContext = React.createContext<AppContextType | null>(null);

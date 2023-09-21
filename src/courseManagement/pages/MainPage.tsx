@@ -11,10 +11,14 @@ export const MainPage = () => {
     throw new Error("AppContext is null");
   }
 
-  const { students, updateStudentBlocks } = appContext;
+  const { students, updateStudentBlocks, finishStudentCourse } = appContext;
 
   const handleBlocksChange = (studentId: number, checkedNames: string[]) => {
     updateStudentBlocks(studentId, checkedNames);
+  }
+
+  const handleFinishCourse = (studentId: number) => {
+    finishStudentCourse(studentId);
   }
 
 
@@ -26,6 +30,7 @@ export const MainPage = () => {
           <StudentsCoursesList 
             students={students}
             onBlocksChange={handleBlocksChange}
+            finishCourse={handleFinishCourse}
           />
           </div>
         </div>
